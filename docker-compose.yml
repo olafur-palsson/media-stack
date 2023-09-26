@@ -108,8 +108,9 @@ services:
     volumes:
       - audiobookshelf-config:/config
       - torrent-downloads:/downloads
-      - audiobookshelf-audiobooks:/audiobooks
-      - audiobookshelf-metadata:/metadata
+      - books:/audiobooks
+      - books:/books
+      - books-metadata:/metadata
 
   readarr:
     image: lscr.io/linuxserver/readarr:develop
@@ -221,6 +222,11 @@ volumes:
   prowlarr-config:
   jellyfin-config:
   qbittorrent-config:
+  readarr-config:
+  audiobookshelf-config:
+
+  books:
+  books-metadata:
   # cleanmyarr-config:
 
 networks:
