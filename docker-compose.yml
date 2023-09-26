@@ -101,6 +101,16 @@ services:
       - torrent-downloads:/downloads
     restart: "unless-stopped"
 
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    ports:
+      - 13378:80
+    volumes:
+      - audiobookshelf-config:/config
+      - torrent-downloads:/downloads
+      - audiobookshelf-audiobooks:/audiobooks
+      - audiobookshelf-metadata:/metadata
+
   readarr:
     image: lscr.io/linuxserver/readarr:develop
     container_name: readarr
