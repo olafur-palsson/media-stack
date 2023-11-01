@@ -121,6 +121,8 @@ services:
       - TZ=Europe/London
     volumes:
       - readarr-config:/config
+      - books:/audiobooks
+      - books:/books
       - torrent-downloads:/downloads
     ports:
       - 8787:8787
@@ -140,6 +142,20 @@ services:
       - torrent-downloads:/downloads
     ports:
       - 8989:8989
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - bazarr-config:/config
+      - torrent-downloads:/downloads
+    ports:
+      - 6767:6767
     restart: unless-stopped
 
   prowlarr:
@@ -163,6 +179,17 @@ services:
     # Comment below ports if VPN is enabled.
     ports:
       - 9696:9696
+    restart: unless-stopped
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+        - LOG_LEVEL=debug
+        - TZ=UTC
+    ports:
+        - 5055:5055
+    volumes:
+      - jellyseerr-config:/app/config
     restart: unless-stopped
 
   jellyfin:
@@ -218,6 +245,8 @@ services:
 volumes:
   torrent-downloads:
   radarr-config:
+  bazarr-config:
+  jellyseerr-config:
   sonarr-config:
   prowlarr-config:
   jellyfin-config:
